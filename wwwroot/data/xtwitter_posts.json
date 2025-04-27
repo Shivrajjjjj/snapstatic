@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "username": "Anonymous",
@@ -19,4 +20,27 @@
     "content": "Bootstrap 5 \u002B ASP.NET = beautiful synergy \uD83D\uDC99. Loving the results so far!",
     "createdAt": "0001-01-01T00:00:00"
   }
+=======
+[
+  {
+    "username": "Anonymous",
+    "content": "Flask API \u002B static frontend = quick MVPs that shine. Love this workflow!",
+    "createdAt": "2025-04-26T11:20:00.5550724Z"
+  },
+  {
+    "username": "Anonymous",
+    "content": "Designing clean UI for my static site. Inspired by Twitter\u0027s layout \uD83D\uDCAB",
+    "createdAt": "2025-04-26T11:19:43.2278893Z"
+  },
+  {
+    "username": "@devdaily",
+    "content": "Just launched my new project in .NET Core with real-time UI updates! \uD83D\uDCBB\u2728",
+    "createdAt": "0001-01-01T00:00:00"
+  },
+  {
+    "username": "@codegirl",
+    "content": "Bootstrap 5 \u002B ASP.NET = beautiful synergy \uD83D\uDC99. Loving the results so far!",
+    "createdAt": "0001-01-01T00:00:00"
+  }
+>>>>>>> 5f85b853791a9fa436df4ac7a04582cd2b4408d1
 ]

@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 <ItemGroup>
 	<Content Include="wwwroot\data\**\*">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
 </ItemGroup>
+=======
+<ItemGroup>
+	<Content Include="wwwroot\data\**\*">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+</ItemGroup>
+>>>>>>> 5f85b853791a9fa436df4ac7a04582cd2b4408d1
