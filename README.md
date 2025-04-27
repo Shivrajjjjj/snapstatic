@@ -27,7 +27,7 @@ A fast and dynamic static site for real-time message sharing and updates.
 
 ---
 📸 Screenshots
-![Uploading Screenshot (74).jpg…]()
+
 
 ## 📦 Installation
 
