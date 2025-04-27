@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
@@ -26,4 +26,4 @@
   </ItemGroup>
 
 </Project>
->>>>>>> 5f85b853791a9fa436df4ac7a04582cd2b4408d1
+
