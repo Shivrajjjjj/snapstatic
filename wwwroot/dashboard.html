@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dashboard – StaticSite</title>
+
+    <!-- Bootstrap & Icons & Animate.css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>  <!-- your firebaseConfig/init -->
+
+    <style>
+        body {
+            transition: background .3s, color .3s;
+        }
+
+            body.dark-mode {
+                background: #121212;
+                color: #e4e4e4;
+            }
+
+        .navbar {
+            transition: background .3s;
+        }
+
+            .navbar.light {
+                background: #fff;
+            }
+
+            .navbar.dark {
+                background: rgba(18,18,18,.8);
+            }
+
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .theme-select {
+            width: 120px;
+        }
+
+        .dashboard-card {
+            margin: 20px 0;
+        }
+
+            .dashboard-card .card-body {
+                padding: 1.5rem;
+            }
+
+        #loginView {
+            max-width: 400px;
+            margin: 4rem auto;
+        }
+
+        .feed-post {
+            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+            .feed-post .avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: 15px;
+            }
+
+            .feed-post .username {
+                font-weight: bold;
+            }
+
+            .feed-post .time {
+                font-size: 0.85em;
+                color: #888;
+            }
+
+            .feed-post .content {
+                margin-top: 5px;
+            }
+
+            .feed-post .actions {
+                margin-top: 10px;
+            }
+
+                .feed-post .actions i {
+                    margin-right: 10px;
+                    cursor: pointer;
+                }
+
+                .feed-post .actions .report {
+                    color: red;
+                }
+
+                .feed-post .actions .share {
+                    color: #007bff;
+                }
+
+                .feed-post .actions .save {
+                    color: green;
+                }
+
+        .loading-message {
+            text-align: center;
+            font-size: 1.5em;
+            color: #007bff;
+            padding: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="mainNav" class="navbar navbar-expand-lg light fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-globe2 fs-4 me-2"></i>StaticSite
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-fill me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html"><i class="bi bi-person-fill me-1"></i>Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="post.html"><i class="bi bi-pencil-square me-1"></i>Post</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope-fill me-1"></i>Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <img id="navAvatar" src="" class="avatar-sm me-2" alt="avatar" style="display:none;" />
+                    <span id="navUser" class="me-3"></span>
+                    <select id="themeSelect" class="form-select form-select-sm theme-select me-3">
+                        <option value="light">🌞 Light</option>
+                        <option value="dark">🌙 Dark</option>
+                        <option value="colorful">🌈 Colorful</option>
+                    </select>
+                    <button id="logoutBtn" class="btn btn-outline-danger btn-sm" style="display:none;">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div style="height:70px;"></div><!-- spacer -->
+    <!-- LOGIN VIEW -->
+    <div id="loginView" class="card shadow-lg animate__animated animate__fadeInDown" style="display:none;">
+        <div class="card-body text-center p-4">
+            <h4 class="mb-3">Please Sign In</h4>
+            <button id="btnGoogle" class="btn btn-danger w-100 mb-3">
+                <i class="bi bi-google me-2"></i>Continue with Google
+            </button>
+            <hr />
+            <div id="recaptcha-container" class="mb-3"></div>
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-phone-fill"></i></span>
+                <input id="phoneNumber" type="tel" class="form-control" placeholder="+1 234 567 8900">
+            </div>
+            <button id="btnSendOtp" class="btn btn-primary w-100 mb-3">Send OTP</button>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
+                <input id="otp" type="text" class="form-control" placeholder="Enter OTP">
+            </div>
+            <button id="btnVerifyOtp" class="btn btn-success w-100">Verify & Sign In</button>
+        </div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="dashView" class="container py-5" style="display:none;">
+        <!-- Welcome -->
+        <div class="card welcome-card text-center p-4 animate__animated animate__fadeInUp">
+            <h1 class="fw-bold mb-3">Welcome, <span id="userName">User</span>!</h1>
+            <p class="lead mb-4">Explore the latest posts on X-Twitter and Threads below:</p>
+        </div>
+
+        <!-- Twitter Feed -->
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <h3 class="card-title">X-Twitter Feed</h3>
+                <div id="twitterFeed"></div>
+                <div id="loadingTwitter" class="loading-message" style="display: none;">Loading Twitter Feed...</div>
+            </div>
+        </div>
+
+        <!-- Threads Feed -->
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <h3 class="card-title">Threads Feed</h3>
+                <div id="threadsFeed"></div>
+                <div id="loadingThreads" class="loading-message" style="display: none;">Loading Threads Feed...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Optional) -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 StaticSite. All rights reserved.</p>
+        <p>Built with love by your team.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Elements
+        const loginView = document.getElementById('loginView');
+        const dashView = document.getElementById('dashView');
+        const navAvatar = document.getElementById('navAvatar');
+        const navUser = document.getElementById('navUser');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userName = document.getElementById('userName');
+        const twitterFeed = document.getElementById('twitterFeed');
+        const threadsFeed = document.getElementById('threadsFeed');
+        const themeSelect = document.getElementById('themeSelect');
+        const loadingTwitter = document.getElementById('loadingTwitter');
+        const loadingThreads = document.getElementById('loadingThreads');
+
+        // Theme logic
+        function applyTheme(t) {
+            document.body.className = t === 'colorful' ? 'theme-colorful' : t === 'dark' ? 'dark-mode' : '';
+            document.getElementById('mainNav').className = `navbar navbar-expand-lg ${t === 'dark' ? 'dark' : 'light'} fixed-top shadow-sm`;
+        }
+        themeSelect.onchange = (e) => {
+            applyTheme(e.target.value);
+            localStorage.setItem('siteTheme', e.target.value);
+        }
+
+        window.onload = () => {
+            // Set theme from localStorage
+            applyTheme(localStorage.getItem('siteTheme') || 'light');
+        }
+
+        // Sign-In listener
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Hide login and show dashboard
+                loginView.style.display = 'none';
+                dashView.style.display = 'block';
+
+                // Set user info
+                navAvatar.style.display = 'block';
+                navAvatar.src = user.photoURL;
+                navUser.innerText = user.displayName;
+                logoutBtn.style.display = 'inline-block';
+                userName.innerText = user.displayName;
+
+                // Sign-Out Logic
+                logoutBtn.onclick = () => {
+                    auth.signOut().then(() => {
+                        loginView.style.display = 'block';
+                        dashView.style.display = 'none';
+                    });
+                };
+
+                // Real-Time Feed for Twitter and Threads
+                db.collection('feeds').doc('twitter').collection('posts')
+                    .orderBy('timestamp', 'desc')
+                    .limit(5)
+                    .onSnapshot((snap) => {
+                        twitterFeed.innerHTML = '';
+                        loadingTwitter.style.display = 'block';
+                        snap.forEach((doc) => {
+                            const post = doc.data();
+                            const postElement = document.createElement('div');
+                            postElement.className = 'feed-post d-flex align-items-center';
+                            postElement.innerHTML = `
+                                    <img src="${post.avatar}" class="avatar" />
+                                    <div class="post-content">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="username">${post.username}</span>
+                                            <span class="time">${new Date(post.timestamp.seconds * 1000).toLocaleString()}</span>
+                                        </div>
+                                        <p class="content">${post.content}</p>
+                                        <div class="actions">
+                                            <i class="bi bi-chat"></i> ${post.comments || 0}
+                                            <i class="bi bi-share ${post.shared ? 'text-info' : ''}"></i> ${post.shares || 0}
+                                            <i class="bi bi-save ${post.saved ? 'text-success' : ''}"></i> ${post.saves || 0}
+                                            <i class="bi bi-flag text-danger report"></i> Report
+                                        </div>
+                                    </div>
+                                `;
+                            twitterFeed.appendChild(postElement);
+                        });
+                        loadingTwitter.style.display = 'none';
+                    });
+
+                // Real-Time Feed for Threads
+                db.collection('feeds').doc('threads').collection('posts')
+                    .orderBy('timestamp', 'desc')
+                    .limit(5)
+                    .onSnapshot((snap) => {
+                        threadsFeed.innerHTML = '';
+                        loadingThreads.style.display = 'block';
+                        snap.forEach((doc) => {
+                            const post = doc.data();
+                            const postElement = document.createElement('div');
+                            postElement.className = 'feed-post d-flex align-items-center';
+                            postElement.innerHTML = `
+                                    <img src="${post.avatar}" class="avatar" />
+                                    <div class="post-content">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="username">${post.username}</span>
+                                            <span class="time">${new Date(post.timestamp.seconds * 1000).toLocaleString()}</span>
+                                        </div>
+                                        <p class="content">${post.content}</p>
+                                        <div class="actions">
+                                            <i class="bi bi-chat"></i> ${post.comments || 0}
+                                            <i class="bi bi-share ${post.shared ? 'text-info' : ''}"></i> ${post.shares || 0}
+                                            <i class="bi bi-save ${post.saved ? 'text-success' : ''}"></i> ${post.saves || 0}
+                                            <i class="bi bi-flag text-danger report"></i> Report
+                                        </div>
+                                    </div>
+                                `;
+                            threadsFeed.appendChild(postElement);
+                        });
+                        loadingThreads.style.display = 'none';
+                    });
+            } else {
+                loginView.style.display = 'block';
+                dashView.style.display = 'none';
+                navAvatar.style.display = 'none';
+                logoutBtn.style.display = 'none';
+            }
+        });
+
+        // Google Sign-In
+        document.getElementById('btnGoogle').onclick = () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider);
+        };
+    </script>
+
+</body>
+</html>
