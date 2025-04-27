@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "default": "my-cool-app-2025"  // Replace this with your actual Firebase project ID
+  }
+}

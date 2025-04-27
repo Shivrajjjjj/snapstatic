@@ -1,0 +1,5 @@
+<ItemGroup>
+	<Content Include="wwwroot\data\**\*">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+</ItemGroup>

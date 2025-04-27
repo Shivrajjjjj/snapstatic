@@ -1,0 +1,19 @@
+# Firebase configuration files
+/wwwroot/firebase-config.js   # Avoid committing your Firebase config file
+
+# Node modules
+/node_modules/
+
+# Firebase functions (if applicable)
+/functions/node_modules/
+
+# Build output
+/dist/
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

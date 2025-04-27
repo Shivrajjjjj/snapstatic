@@ -1,0 +1,81 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\Feed.html",
+      "PackagePath": "staticwebassets\\Feed.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\about.html",
+      "PackagePath": "staticwebassets\\about.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\contact.html",
+      "PackagePath": "staticwebassets\\contact.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\dashboard.html",
+      "PackagePath": "staticwebassets\\dashboard.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\data\\threads_posts.json",
+      "PackagePath": "staticwebassets\\data\\threads_posts.json"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\data\\xtwitter_posts.json",
+      "PackagePath": "staticwebassets\\data\\xtwitter_posts.json"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\firebase-config.js",
+      "PackagePath": "staticwebassets\\firebase-config.js"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\post.html",
+      "PackagePath": "staticwebassets\\post.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\profile.html",
+      "PackagePath": "staticwebassets\\profile.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\script.js",
+      "PackagePath": "staticwebassets\\script.js"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\style.css",
+      "PackagePath": "staticwebassets\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\threads.html",
+      "PackagePath": "staticwebassets\\threads.html"
+    },
+    {
+      "Id": "C:\\Users\\shivr\\StaticSite\\wwwroot\\xtwitter.html",
+      "PackagePath": "staticwebassets\\xtwitter.html"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.StaticSite.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.StaticSite.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.StaticSite.props",
+      "PackagePath": "build\\StaticSite.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.StaticSite.props",
+      "PackagePath": "buildMultiTargeting\\StaticSite.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.StaticSite.props",
+      "PackagePath": "buildTransitive\\StaticSite.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

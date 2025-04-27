@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "wwwroot", // This is the folder containing your static files
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html" // For single-page apps, rewrite all paths to index.html
+      }
+    ]
+  }
+}
