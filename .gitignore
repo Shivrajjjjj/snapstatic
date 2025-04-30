@@ -1,4 +1,3 @@
-
 # Firebase configuration files
 /wwwroot/firebase-config.js   # Avoid committing your Firebase config file
 
@@ -18,12 +17,3 @@
 # OS files
 .DS_Store
 Thumbs.db
-.vs/
-bin/
-obj/
-*.user
-*.suo
-*.cache
-firebase.json
-.firebaserc
-.firebase/
